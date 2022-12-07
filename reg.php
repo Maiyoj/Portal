@@ -5,24 +5,22 @@
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $password_hash = password_hash($password, PASSWORD_BCRYPT);
-        $query = $connection->prepare("SELECT * FROM users WHERE email=email");
-        //$query->bindParam("email", $email, PDO::PARAM_STR);
-        $query->execute();
-        if ($query->rowCount() > 0) {
-            echo '<p class="error">The email address is already registered!</p>';
-        }
-        if ($query->rowCount() == 0) {
-            $query = $connection->prepare("INSERT INTO users(username,password,email) VALUES (:username,:password_hash,:email)");
-            $query->bindParam("username", $username, PDO::PARAM_STR);
-            $query->bindParam("password_hash", $password_hash, PDO::PARAM_STR);
-            $query->bindParam("email", $email, PDO::PARAM_STR);
-            $result = $query->execute();
-            if ($result) {
-                echo '<p class="success">Your registration was successful!</p>';
-            } else {
-                echo '<p class="error">Something went wrong!</p>';
-            }
+  
+        $sql_u = "SELECT * FROM users WHERE username='$username'";
+        $sql_e = "SELECT * FROM users WHERE email='$email'";
+        $res_u = mysqli_query($connection, $sql_u);
+        $res_e = mysqli_query($connection, $sql_e);
+  
+        if (mysqli_num_rows($res_u) > 0) {
+          $name_error = "Sorry... username already taken"; 	
+        }else if(mysqli_num_rows($res_e) > 0){
+          $email_error = "Sorry... email already taken"; 	
+        }else{
+             $query = "INSERT INTO users (username, email, password) 
+                      VALUES ('$username', '$email', '".md5($password)."')";
+             $results = mysqli_query($connection, $query);
+             echo 'Saved!';
+             exit();
         }
     }
 ?>
