@@ -13,9 +13,12 @@
         if (mysqli_num_rows($res_u) > 0) {
           //$results = mysqli_query($connection, $query);
           echo 'Loginn!';
-          header('Location:Dashboard.html'); 
-          exit();
-    }
+          header('Location:Dashboard.html');}
+        else{
+            header('Location:reg.html');
+            exit();
+        }
+ 
 }
     
 ?>
