@@ -1,3 +1,4 @@
+<?php include 'config.php';?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,34 +12,34 @@
 
     </head>
     <body>
-        <table class="table">
+    
+      
+       <table class="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">First</th>
                 <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+  
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              <?php
+                $sql = "SELECT * FROM users"; 
+                $result = $connection->query($sql);?>
+    
+              <?php if ($result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                  <tr>
+                    <td><?php echo $row["username"]; ?></td>
+                    <td><?php echo $row["email"]; ?></td>	
+                  </tr>
+                <?php endwhile; ?>
+              <?php endif; ?>
+    
+              <?php
+                $connection->close();
+              ?>
             </tbody>
           </table>
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

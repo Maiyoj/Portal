@@ -9,6 +9,10 @@
         $sql_e = "SELECT * FROM users WHERE password='$password'";
         $res_u = mysqli_query($connection, $sql_u);
         $res_e = mysqli_query($connection, $sql_e);
+
+        //Users
+        $result = mysqli_query($connection,"SELECT * FROM users");
+        $all_property = array();
   
         if (mysqli_num_rows($res_u) > 0) {
           //$results = mysqli_query($connection, $query);

@@ -15,4 +15,6 @@
         die("Connection failed!" . mysqli_connect_error());
 
     }
+
+    $query = "SELECT * FROM users";
 ?>
